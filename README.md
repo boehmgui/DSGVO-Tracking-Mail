@@ -26,7 +26,7 @@ Die richtige Ziel-, also Kunden E-Mail Adresse wird dann aus den
 ## Konfigurationsdatei
 Die einzige Konfigurationsdatei ist eine .ini (imap.ini) mit den folgenden 
 Sektionen:
-```
+``` ini
 [IMAP]
 HOST = <ip-addresse oder FQDN des E-Mail Servers mit dem CATCH-ALL Postfach
 USERNAME = <Benutzername>
