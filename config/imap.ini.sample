@@ -1,0 +1,43 @@
+[IMAP]
+HOST = <fqdn oder ip address>
+USERNAME = <user name>
+PASSWORD = <password>
+ssl = True
+tls = True
+imap_port= 993
+retention_period = 360
+
+[SMTP]
+HOST = <fqdn oder ip address>
+USERNAME = <user name>
+PASSWORD = <password>
+ssl = True
+tls = False
+smtp_port = 465
+
+[FORWARD]
+FROM: <from e-mail address>
+BCC: <bcc email address>
+SPFcheck = True
+
+[MSSQL]
+host = localhost\JTLWAWI
+username = <username>
+password = <password>
+database = eazybusiness
+driver = {SQL Server}
+port = 49751
+
+[LOGGING]
+logfilename = imap.log
+path_to_logfile = ./
+level_file = DEBUG
+level_screen = INFO
+filesize = 10000000
+filecount = 5
+
+[SQL]
+sql_query = select k.kKunde, k.cMail from tRechnungsadresse k inner join tBestellung b on k.kRechnungsAdresse = b.kRechnungsAdresse and b.cBestellNr =
+
+[WHITELIST]
+allowed_domains = ["dhl.de","paket.dpd.de","service.dpd.de","parcel.one", "deutschepost.de"]

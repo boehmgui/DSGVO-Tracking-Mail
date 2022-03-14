@@ -5,6 +5,7 @@ import logging
 import smtplib
 import email
 import imaplib
+import sys
 from email.parser import Parser
 
 try:
@@ -13,21 +14,16 @@ except:
     pass
 import json
 import datetime
+import ssl
 
 from imapclient import IMAPClient
 from logging.handlers import RotatingFileHandler
 
-__author__ = "Guido Boehm"
-__copyright__ = "Copyright 2021"
-__credits__ = [""]
-__license__ = ""
-__version__ = "1.0.1"
-__maintainer__ = "Guido Boehm"
-__email__ = "guido@family-boehm.de"
-__status__ = "released"
+__version__ = "1.02"
 
-script_directory = os.path.dirname(os.path.realpath(__file__))
-inifile = os.path.join(script_directory, "config/imap.ini")
+
+# build path to config file
+inifile = os.path.join(os.path.dirname(sys.argv[0]), "config/imap.ini")
 # instantiate logger outside so that is it available everywhere
 logger = logging.getLogger(__name__)
 
@@ -152,15 +148,19 @@ def main():
         'host': config.get('IMAP', 'HOST'),
         'username': config.get('IMAP', 'USERNAME'),
         'password': config.get('IMAP', 'PASSWORD'),
-        'imap_port': config.get('IMAP', 'imap_port')
+        'imap_port': config.getint('IMAP', 'imap_port'),
+        'ssl': config.getboolean('IMAP', 'ssl'),
+        'tls': config.getboolean('IMAP', 'tls')
         }
     retention_period = int(config.get('IMAP', 'retention_period'))
     smtp = {
         'host': config.get('SMTP', 'HOST'),
         'username': config.get('SMTP', 'USERNAME'),
         'password': config.get('SMTP', 'PASSWORD'),
-        'smtp_port': config.get('SMTP', 'smtp_port')
-        }
+        'smtp_port': config.getint('SMTP', 'smtp_port'),
+        'ssl': config.getboolean('SMTP', 'ssl'),
+        'tls': config.getboolean('SMTP', 'tls')
+    }
 
     sql_uid = config.get('MSSQL', 'username')
     sql_pwd = config.get('MSSQL', 'password')
@@ -195,10 +195,15 @@ def main():
 
     while imap_error:
         try:
-
             logger.info('Verbindung zum imap Server aufbauen')
-            imap_session = imaplib.IMAP4(imap['host'], imap['imap_port'])
-            imap_session.starttls()
+            if imap['ssl']:
+                imap_session = imaplib.IMAP4_SSL(imap['host'], imap['imap_port'])
+            else:
+                imap_session = imaplib.IMAP4(imap['host'], imap['imap_port'])
+            if imap['tls']:
+                # tls_context = ssl.create_default_context()
+                # imap_session.starttls(ssl_context=tls_context)
+                imap_session.starttls()
             imap_session.login(imap['username'], imap['password'])
             imap_session.select('INBOX')
 
@@ -287,7 +292,7 @@ def main():
             to_address = to_address.split("<")[-1]
             to_address = to_address.split(">")[0]
 
-            # Teil vor "@" enthält die Auftragsnummer zu dieser E-mail
+            # Teil vor "@" enthält die Auftragsnummer zu dieser E-Mail
             auftragsnummer = to_address.split("@")[0]
             query = sql_query + " '{0}'".format(auftragsnummer)
 
@@ -314,9 +319,12 @@ def main():
                 # specified envelope from and to addresses
                 recipients = [to_addr, bcc_addr]
                 try:
-                    smtp_session = smtplib.SMTP(smtp['host'],
-                                                smtp['smtp_port'])
-                    smtp_session.starttls()
+                    if smtp['ssl']:
+                        smtp_session = smtplib.SMTP_SSL(smtp['host'], smtp['smtp_port'])
+                    else:
+                        smtp_session = smtplib.SMTP(smtp['host'], smtp['smtp_port'])
+                    if smtp['tls']:
+                        smtp_session.starttls()
                     smtp_session.login(smtp['username'], smtp['password'])
                     smtp_session.sendmail(from_addr, recipients,
                                           message.as_string())
