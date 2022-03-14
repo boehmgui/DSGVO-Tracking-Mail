@@ -32,6 +32,8 @@ HOST = <ip-addresse oder FQDN des E-Mail Servers mit dem CATCH-ALL Postfach
 USERNAME = <Benutzername>
 PASSWORD = <Passwort>
 imap_port = 143
+ssl = True
+tls = True
 idle = 10
 retention_period = 360
 
@@ -40,6 +42,8 @@ HOST = <ip-addresse oder FQDN des E-Mail Servers über welchen die E-Mail an
 die Kunden gesendet werden>
 USERNAME = <Benutzername>
 PASSWORD = <Passwort>
+ssl = True
+tls = True
 smtp_port = 587
 
 [FORWARD]
