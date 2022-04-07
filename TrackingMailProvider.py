@@ -5,6 +5,7 @@ import logging
 import smtplib
 import email
 import imaplib
+import re
 import sys
 from email.parser import Parser
 
@@ -86,13 +87,14 @@ def connect_to_db(driver, port, server, database, username, password):
     return connection
 
 
-def get_from_domain(from_address):
+def get_domain(from_address):
     """
     extrahiert Domain aus der E-Mail Adresse
     :param from_address: zB noreply@dhl.de
     :return: dhl.de
     """
-    return from_address.split("@")[1]
+    # return only the domain part
+    return re.findall(r'@([a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z])', from_address)[0]
 
 
 def in_whitelist(from_address, whitelist):
@@ -104,7 +106,7 @@ def in_whitelist(from_address, whitelist):
     """
 
     # nur die Domain ist relevant
-    domain = get_from_domain(from_address)
+    domain = get_domain(from_address)
 
     if domain in whitelist:
         return True
@@ -264,8 +266,7 @@ def main():
                                                                  received_spf
                                                                  for code in
                                                                  spf_codes))
-                              or not in_whitelist(message['From'][1:-1],
-                                                  allowed_domains)):
+                              or not in_whitelist(message['From'], allowed_domains)):
 
                 # mit nächstem Wert in mg_ids weitermachen, da Absender Domain
                 # nicht in Whitelist vorhanden oder SPF Check fehlgeschlagen
@@ -276,8 +277,7 @@ def main():
                                                   message['From']))
                 continue
 
-            elif not SPF_check and not in_whitelist(message['From'][1:-1],
-                                                    allowed_domains):
+            elif not SPF_check and not in_whitelist(message['From'], allowed_domains):
                 # mit nächstem Wert in mg_ids weitermachen,
                 # da Absenderadresse nicht in WhiteList - SPF check nicht
                 # notwendig
