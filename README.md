@@ -38,8 +38,7 @@ idle = 10
 retention_period = 360
 
 [SMTP]
-HOST = <ip-addresse oder FQDN des E-Mail Servers über welchen die E-Mail an 
-die Kunden gesendet werden>
+HOST = <ip-addresse oder FQDN des E-Mail Servers über welchen die E-Mail an die Kunden gesendet werden>
 USERNAME = <Benutzername>
 PASSWORD = <Passwort>
 ssl = True
@@ -67,9 +66,6 @@ level_screen = INFO
 filesize = 10000000
 filecount = 5
 
-[SQL]
-sql_query = select k.kKunde, k.cMail from tRechnungsadresse k inner join tBestellung b on k.kKunde=b.tKunde_kKunde and b.cBestellNr =
-
 [WHITELIST]
-allowed_domains = ["dhl.de","dpd.de","parcel.one","family-boehm.de","sannes-sticdesign.de"]
+allowed_domains = ["dhl.de","dpd.de","parcel.one"]
 ```

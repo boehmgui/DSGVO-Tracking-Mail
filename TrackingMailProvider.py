@@ -20,8 +20,7 @@ import ssl
 from imapclient import IMAPClient
 from logging.handlers import RotatingFileHandler
 
-__version__ = "1.02"
-
+__version__ = "v.1.0.4"
 
 # build path to config file
 inifile = os.path.join(os.path.dirname(sys.argv[0]), "config/imap.ini")
@@ -29,9 +28,10 @@ inifile = os.path.join(os.path.dirname(sys.argv[0]), "config/imap.ini")
 logger = logging.getLogger(__name__)
 
 #  globale Parameter:
-seenSearch = "SEEN"
-notSeenSearch = "NOT SEEN"
-spf_codes = ["pass", "softfail", "Pass", "SoftFail", "neutral", "Neutral"]
+SEEN_SEARCH = "SEEN"
+NOT_SEEN_SEARCH = "NOT SEEN"
+SPF_CODES = ["pass", "softfail", "Pass", "SoftFail", "neutral", "Neutral"]
+QUERY_STRING = 'select k.kKunde, k.cMail from tRechnungsadresse k inner join tBestellung b on k.kRechnungsAdresse = b.kRechnungsAdresse and b.cBestellNr = ?'
 
 
 def create_logging(config):
@@ -171,8 +171,6 @@ def main():
     sql_db = config.get('MSSQL', 'database')
     sql_driver = config.get('MSSQL', 'driver')
 
-    sql_query = config.get('SQL', 'sql_query')
-
     from_addr = config.get('FORWARD', 'FROM')
     bcc_addr = config.get('FORWARD', 'BCC')
 
@@ -265,7 +263,7 @@ def main():
             if SPF_check and ((received_spf is None) or not (any(code in
                                                                  received_spf
                                                                  for code in
-                                                                 spf_codes))
+                                                                 SPF_CODES))
                               or not in_whitelist(message['From'], allowed_domains)):
 
                 # mit nächstem Wert in mg_ids weitermachen, da Absender Domain
@@ -294,11 +292,10 @@ def main():
 
             # Teil vor "@" enthält die Auftragsnummer zu dieser E-Mail
             auftragsnummer = to_address.split("@")[0]
-            query = sql_query + " '{0}'".format(auftragsnummer)
 
             try:
                 with db_connection.cursor() as cursor:
-                    cursor.execute(query)
+                    cursor.execute(QUERY_STRING, auftragsnummer)
                     row = cursor.fetchone()
             except:
                 logger.error("Wawi DB Abfrage fehlgeschlagen")
@@ -308,8 +305,7 @@ def main():
                 # 2. Wert in row enthält die original E-Mail Adresse des
                 # Auftrags
                 to_addr = row[1]
-                logger.debug("Korrespondierende E-Mail Adresse in Wawi "
-                             "gefunden: {0}".format(to_addr))
+                logger.debug("Korrespondierende E-Mail Adresse in Wawi gefunden: {0}".format(to_addr))
 
                 # replace headers (could do other processing here)
                 message.replace_header("From", from_addr)
@@ -330,8 +326,7 @@ def main():
                                           message.as_string())
                     smtp_session.quit()
                     logger.info(
-                            "E-Mail erfolgreich gesendet! {0}".format(
-                                recipients))
+                            "E-Mail erfolgreich gesendet! {0}".format(recipients))
                 except Exception:
                     logger.error("Fehler beim senden des E-Mails")
 

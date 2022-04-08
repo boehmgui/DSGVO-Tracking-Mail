@@ -36,8 +36,5 @@ level_screen = INFO
 filesize = 10000000
 filecount = 5
 
-[SQL]
-sql_query = select k.kKunde, k.cMail from tRechnungsadresse k inner join tBestellung b on k.kRechnungsAdresse = b.kRechnungsAdresse and b.cBestellNr =
-
 [WHITELIST]
 allowed_domains = ["dhl.de","paket.dpd.de","service.dpd.de","parcel.one", "deutschepost.de"]
