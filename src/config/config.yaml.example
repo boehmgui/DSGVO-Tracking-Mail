@@ -1,0 +1,51 @@
+LOGGING:
+  logfilename: imap.log
+  path_to_logfile: ./
+  level_file: ERROR
+  level_screen: ERROR
+  filesize: 10000000
+  filecount: 5
+  
+IMAP:
+  host: <IP-Adresse or FQDN>
+  username: <Benutzername>
+  password: <Passwort>
+  ssl: True
+  tls: False
+  port: 993
+  retention_period: 60
+
+SMTP:
+  host: <IP-Adresse or FQDN>
+  username: <Benutzername>
+  password: <Passwort>
+  ssl: False
+  tls: True
+  port: 587
+
+FORWARD:
+  #
+  from: <E-Mail Adresse, die als Absender beutzt werden soll>
+  bcc:
+    - <E-Mail Adresse, and welche die E-Mail als BCC gesendet werden soll>
+    - <weitere E-Mail Adresse, and welche die E-Mail als BCC gesendet werden soll>
+  SPFcheck: True
+
+SQLITE:
+  dbname: alias.db
+  directory: ./db
+  table: alias
+  timeout: 5
+  retention_period: 60
+
+IMPORT:
+  filename: import.csv
+  directory: ./import
+
+WHITELIST:
+  allowed_domains:
+    - dhl.de
+    - paket.dpd.de
+    - service.dpd.de
+    - parcel.one
+    - deutschepost.de

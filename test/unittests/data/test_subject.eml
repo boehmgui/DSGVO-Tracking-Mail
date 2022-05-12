@@ -1,0 +1,72 @@
+Return-Path: <paul_positive@example.com>
+Received: from mailserver.example.com (127.0.0.1:59870)
+	by mailserver (mailserver-dagent) with LMTP;
+	Mon, 09 May 2022 16:17:48 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mailserver.example.com (Postfix) with ESMTP id 7E8B379AC17
+	for <testemail@example.com>; Mon,  9 May 2022 16:17:48 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new-2.10.1 (20141025) (Debian) at
+	example.com
+X-Spam-Flag: NO
+X-Spam-Score: -0.009
+X-Spam-Level:
+X-Spam-Status: No, score=-0.009 tagged_above=-1000 required=5
+	tests=[SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01]
+	autolearn=disabled
+Received: from mailserver.example.com ([127.0.0.1])
+	by localhost (mailserver.example.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TYb2jh3Cd8iP for <testemail@example.com>;
+	Mon,  9 May 2022 16:17:47 +0200 (CEST)
+Received: from example.com (mailserver.example.com [192.168.10.16])
+	by mailserver.example.com (Postfix) with ESMTP id 13B02795314
+	for <testemail@example.com>; Mon,  9 May 2022 16:17:47 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on
+	example.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.0 required=5.0 tests=RCVD_IN_MSPIKE_H2,
+	SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+	autolearn_force=no version=3.4.2
+X-Original-To: testemail@example.com
+Delivered-To: testemail@example.com
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.131])
+	by example.com (Postfix) with ESMTPS id BD1ABA209FA
+	for <testemail@example.com>; Mon,  9 May 2022 16:17:45 +0200 (CEST)
+Authentication-Results: example.com;
+        spf=pass (sender IP is 212.227.126.131) smtp.mailfrom=paul_positive@example.com smtp.helo=mout.kundenserver.de
+Received-SPF: pass (example.com: domain of family-boehm.de designates 212.227.126.131 as permitted sender) client-ip=212.227.126.131; envelope-from=paul_positive@example.com; helo=mout.kundenserver.de;
+Received: from [192.168.1.78] ([217.92.207.116]) by mrelayeu.kundenserver.de
+ (mreue012 [213.165.67.97]) with ESMTPSA (Nemesis) id 1MNwXA-1nPxmT179M-00ODoF
+ for <testemail@example.com>; Mon, 09 May 2022 16:17:45 +0200
+Message-ID: <e21b2810-71d7-826e-f1e0-28fa7f26693b@family-boehm.de>
+Date: Mon, 9 May 2022 16:17:43 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.9.0
+Content-Language: de-DE
+To: testemail@example.com
+From: Paul Positiv <paul_positive@example.com>
+Subject: test subject
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:vAKnlQn6MBkzgLA+1rBIbDhV2bKk2uGGPXoY+fdP1/vXCr3+jmF
+ mZseIZcHGI28bV+CBaXTb5hwbLRknDW4BmOTd4y06UMlcwFWbx8VmrPUeY5kOmClir4yS4y
+ goaEamkvxQfSDle2k7BPcYv2rsx+2KANiEk9DTTGH0rc1krl+uxJ5dyvsONF31HToc7YonO
+ 9sapQZ8D0LVDwc3x2dBiQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lrBrkAX3Vhg=:xoWUgj+YDHdBhfCFjgeTAW
+ ZNuG0cqZub/X7cNaur7yvY+3Pdk8XoXCGXZ4BptkHK9tPbxPg809g/9bpxf9Gsej6winI1ror
+ WLZUzWSA//1vr+TsrVsFmXPvOOy1Tzl4b/1lMaPXoELO4neTFOoxoSObMEzpAp36bpxoChjfG
+ SeYKg1SnM5Wq27maTvIawCyYibFeh9pikhmkskIa4XEDa8jy1KVis0x1hV/hk/bKaId9yy0s2
+ QL/LzJa9zsp/VkUkMzOv6aT1AEm9s7INuQolv38Yk0AW1mKh4qppN1mTcpemhuFxp1SDL4HEb
+ 1/V5aFwD7eruJ3cEb1MuNZi9eUh67jXjguHqwtlCKWCHGsZLTlDjbpTPJ6afKIU3sxBCkGjz8
+ GGB1ep4j4U7hzJaST/xxRwh8mwgR0Z2/EaMi8mNfwbdVY6Hp6EiNn2MSm6h5TQdMU/h4Mruka
+ 1scjG4pc8kdQhBqa7nD0ypNdDw8frTpY4F3rrN6UB2UUA9SBr6UMSCU3zeTPIgf12BfpLdtl/
+ J45SbuCgvaX1HBiXfgYGspoA58a0O8+Ajtmik3qD78VRdhG8DweSIU5acZuehHXkkirGRZfgk
+ Pkn+VdJbIu4CmCwgfCX6YzqlcvrRjjHlmcBoGuBg6KcRGHuxPJCoTb9Bh70O1XtSA44RYw9OF
+ A9mroLQGhO+6l1ZbkW86g+5Ktqluv99IcqECfOP2BDdsSvpGfkVf9+KPcEf/AW/102Xk=
+X-HXM-IMAPFlags: \Seen \Recent
+X-HXM-Date: 09-May-2022 16:17:46 +0200
+X-HXM-Folder: INBOX
+
+Test body
+
+
