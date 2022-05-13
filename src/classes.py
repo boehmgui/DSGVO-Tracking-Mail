@@ -126,7 +126,7 @@ class IMAP_Class(MailHost):
 
         """
         before_date = (date.today() - timedelta(days=IMAP_Class.retention_period)).strftime("%d-%b-%Y")
-        _, data = self.session.search(None, '(BEFORE "{0}"'.format(before_date))
+        _, data = self.session.search(None, '(BEFORE "{0}")'.format(before_date))
 
         msg_ids = data[0].split()
         for msg_id in msg_ids:
@@ -142,7 +142,7 @@ class IMAP_Class(MailHost):
 
         """
         # filter unseen messages
-        _, msg_ids = self.session.search(None, f'"{criterion}"')
+        _, msg_ids = self.session.search(None, '{0}'.format(criterion))
         return msg_ids[0].split()
 
     def fetch_message_by_id(self, msg_id):

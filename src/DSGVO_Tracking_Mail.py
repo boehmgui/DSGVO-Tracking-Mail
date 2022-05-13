@@ -35,7 +35,7 @@ import yaml
 
 from classes import *
 
-__version__ = "v.2.0.0"
+see__version__ = "v.2.0.0"
 
 SCRIPT_DIR = Path(sys.argv[0]).resolve().parent
 
@@ -190,7 +190,7 @@ def main():
     # fetch unseen emails
     imap_session.folder('Inbox')
     try:
-        msg_ids = imap_session.get_email_ids("UNSEEN")
+        msg_ids = imap_session.get_email_ids("NOT SEEN")
         logger.debug('{0} neue E-Mails gefunden'.format(len(msg_ids)))
     except imaplib.IMAP4.error as err:
         logger.error(f"Fehler beim Lesen der E-Mails\n{err}\nProgramm wird beendet")
