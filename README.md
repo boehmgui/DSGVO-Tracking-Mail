@@ -9,7 +9,7 @@ Logistiker weitergibt.
 ## Konzept
 Im Zuge des Versands wird an den Logistiker nicht die echte E-Mail-Adresse des Kunden übergeben, sondern nur eine  
 Alias-Adresse.
-Z.B.:```<Auftragsnummer>@foobar.com>```.
+Z.B.:```<Auftragsnummer>@foobar.com```.
 
 Der Logistker versendet dann seine Versandbenachrichtigungnen an diese pseudonyme E-Mail-Adresse (Alias), die in 
 einem eigenem IMAP [Catch-All-Mailkonto](https://de.wikipedia.org/wiki/Catch-All) landen. 
@@ -153,7 +153,7 @@ Das Trennzeichen muss ein ',' (Komma) sein und folgende Struktur haben:
 
 Beispieldatei:
 ```csv
-foo@foobar.com,AU-2022-12345@mein_catch_all_postfach.de>
+foo@foobar.com,AU-2022-12345@mein_catch_all_postfach.de
 ```
 
 ## Catch-All-Mailkonto
@@ -230,6 +230,7 @@ unterschiedlich gesetzt werden, wenn man z.B. nur mehr informationen im Logfile 
     wird diese E-Mail dann als neu betrachtet und erneut bearbeitet
 - **Alias**: Aliaseinträge in der DB müssen Eindeutig sein. Doppelte Aliase werden ignoriert
 - **SPF**: es wird nur der SPF Rekord im E-Mail Header ausgewertet und keine extra DNS Abgfrage durchgeführt. Fehlt dieser Header, gilt der SPF-check als passed
+- Zertifikate digital signierter E-Mails, z.B. von DHL werden beim Empfänger als ungültig angezeitgt, da die Absendeadresse nun nicht mehr die von DHL ist
 
 # Copy Right
 (c) Guido Boehm - alle Rechte vorbehalten
