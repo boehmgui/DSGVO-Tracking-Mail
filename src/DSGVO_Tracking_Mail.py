@@ -33,7 +33,7 @@ from pathlib import Path
 
 import yaml
 
-from classes import *
+from src.classes import *
 
 see__version__ = "v.2.0.0"
 
@@ -257,11 +257,12 @@ def main():
 
             smtp_session.send_message(message.FROM_address, [message.TO_address] + message.BCC_address,
                                       message.message_as_string)
-            smtp_session.quit()
+
             logger.debug("E-Mail erfolgreich gesendet! {0}".format([message.TO_address] + message.BCC_address))
         except Exception as err:
             logger.error("Fehler beim senden des E-Mails\n{0}".format(err))
-            smtp_session.quit()
+            
+    smtp_session.quit()
 
 
 if __name__ == '__main__':
