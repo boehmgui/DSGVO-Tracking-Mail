@@ -448,7 +448,7 @@ class DBClass:
 
         """
         c = self.conn.cursor()
-        c.execute(f'''SELECT * FROM {self.table} WHERE alias='{alias}';''')
+        c.execute(f'''SELECT * FROM {self.table} WHERE alias='{alias}' COLLATE NOCASE;;''')
         row = c.fetchone()
         return row[0] if row else None
 
