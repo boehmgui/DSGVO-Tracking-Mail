@@ -33,7 +33,7 @@ import re
 import smtplib
 import sqlite3
 
-from Validator_Classes import CharField, IntegerField, BoolField, FQDNField
+from src.Validator_Classes import CharField, IntegerField, BoolField, FQDNField
 
 from email.parser import HeaderParser
 from datetime import datetime, timedelta, date
@@ -120,9 +120,9 @@ class IMAP_Class(MailHost):
 
     def trash_mails(self):
         """
-        marks all emails older than retention_preiod
+        trashs all emails older than retention_preiod
         Returns:
-            n/a
+            len(msg_ids) (int): number of trashed emails
 
         """
         before_date = (date.today() - timedelta(days=IMAP_Class.retention_period)).strftime("%d-%b-%Y")
@@ -131,6 +131,7 @@ class IMAP_Class(MailHost):
         msg_ids = data[0].split()
         for msg_id in msg_ids:
             self.session.store(msg_id, '+FLAGS', '\\Deleted')  # move to trash
+        return len(msg_ids)
 
     def get_email_ids(self, criterion):
         """
@@ -448,7 +449,7 @@ class DBClass:
 
         """
         c = self.conn.cursor()
-        c.execute(f'''SELECT * FROM {self.table} WHERE alias='{alias}';''')
+        c.execute(f'''SELECT * FROM {self.table} WHERE alias='{alias}' COLLATE NOCASE;''')
         row = c.fetchone()
         return row[0] if row else None
 

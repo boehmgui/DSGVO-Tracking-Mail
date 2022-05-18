@@ -6,7 +6,7 @@ __author__ = "Guido Boehm"
 __copyright__ = "Copyright 2022, TrackingMailProvider"
 __filename__ = "DSGVO_Tracking_Mail.py"
 __credits__ = [""]
-__version__ = "2.0.0"
+__version__ = "2.0.2"
 __maintainer__ = "Guido Boehm"
 __email__ = "olb@family-boehm.de"
 __status__ = "Prototype"
@@ -33,7 +33,7 @@ from pathlib import Path
 
 import yaml
 
-from classes import *
+from src.classes import *
 
 see__version__ = "v.2.0.0"
 
@@ -223,9 +223,10 @@ def main():
     # for an unknown reason sometines an EOF error ocurrs when searching for emails to be deleted.
     # as this is harmless (only mails will not be deleted) it is safe to continue
     try:
-        imap_session.trash_mails()
+        trahsed_messages = imap_session.trash_mails()
     except Exception as err:
         logger.error('That damned EOF error has occurred again. When time permits, need to do RCA {0}'.format(err))
+    logger.debug('{0} E-Mails gelöscht'.format(trahsed_messages))
     imap_session.empty_folder('INBOX')
     imap_session.quit()
 
@@ -257,11 +258,11 @@ def main():
 
             smtp_session.send_message(message.FROM_address, [message.TO_address] + message.BCC_address,
                                       message.message_as_string)
-            smtp_session.quit()
             logger.debug("E-Mail erfolgreich gesendet! {0}".format([message.TO_address] + message.BCC_address))
         except Exception as err:
             logger.error("Fehler beim senden des E-Mails\n{0}".format(err))
-            smtp_session.quit()
+
+    smtp_session.quit()
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-foo1@foobar.com,alias1@alias.com
-foo2@foobar.com,alias2@alias.com
-foo3@foobar.com,alias3@alias.com
-foo4@foobar.com,alias4@alias.com
+foo1@foobar.com,Alias1@alias.com
+foo2@foobar.com,Alias2@alias.com
+foo3@foobar.com,aLias3@aLias.com
+foo4@foobar.com,alias4@Alias.com

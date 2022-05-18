@@ -36,7 +36,7 @@ from src.classes import *
 from unittest import TestCase
 from datetime import datetime, timedelta, date
 
-DATA_DIR = Path(Path.cwd(), 'data')
+DATA_DIR = Path(Path.cwd(), 'unittests', 'data')
 
 
 class Test_Credentials(TestCase):
@@ -109,7 +109,7 @@ class TestDBClass(TestCase):
             for row in line:
                 self.conn.add_alias(row[0], row[1], date.today().strftime('%Y-%m-%d'))
         # query in DB
-        self.assertEqual(self.conn.get_address('alias3@alias.com'), 'foo3@foobar.com')
+        self.assertEqual(self.conn.get_address('AlIaS3@aLiAs.CoM'), 'foo3@foobar.com')
         # query not in DB
         self.assertIsNone(self.conn.get_address('not_in_db'))
 
